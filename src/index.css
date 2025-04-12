@@ -1,0 +1,33 @@
+::before,
+*,
+::after {
+  @media (prefers-reduced-motion: reduce) {
+    transition-delay: 0s !important;
+    transition-duration: 0s !important;
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+  }
+}
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: #abb2bf;
+  background-color: #282c34;
+}
+
+a {
+  font-weight: 500;
+  color: #98c379;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #98c379;
+}
+
+body {
+  margin: 0;
+}
