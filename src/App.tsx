@@ -1,7 +1,20 @@
+import React from 'react';
+import {Timer} from './features/Timer';
+import * as stylex from '@stylexjs/stylex';
+
+const style = stylex.create({
+  app: {
+    display: 'grid',
+    minHeight: '100vh',
+    gridTemplateRows: 'auto 1fr',
+  },
+});
+
 export function App() {
+  const [isTimerRunning, setIsTimerRunning] = React.useState(false);
   return (
-    <>
-      <h1>Hello</h1>
-    </>
+    <main {...stylex.props(style.app)}>
+      <Timer isRunning={isTimerRunning} setIsRunning={setIsTimerRunning} />
+    </main>
   );
 }

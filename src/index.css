@@ -1,3 +1,5 @@
+@stylex stylesheet;
+
 ::before,
 *,
 ::after {
@@ -26,6 +28,19 @@ a {
 }
 a:hover {
   color: #98c379;
+}
+
+button {
+  background: none;
+  font-size: 1.3rem;
+  border: 2px solid #abb2bf;
+  border-radius: 3px;
+  transition: background-color 0.2s ease-in-out;
+}
+button:hover {
+  cursor: pointer;
+  background-color: #abb2bf55;
+  transition: background-color 0.2s ease-in-out;
 }
 
 body {
