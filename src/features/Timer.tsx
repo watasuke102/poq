@@ -5,7 +5,7 @@ const style = stylex.create({
   timerCounter: {
     display: 'block',
     textAlign: 'center',
-    fontSize: '15rem',
+    fontSize: '25dvw',
     fontWeight: 'bold',
     fontFamily: 'Consolas, "Courier New", monospace',
   },
