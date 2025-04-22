@@ -1,5 +1,5 @@
 import React from 'react';
-import {Timer} from './features/Timer';
+import {Timer} from './features/timer';
 import * as stylex from '@stylexjs/stylex';
 import {AddNewTaskArea, TaskList} from './features/task';
 
