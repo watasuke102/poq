@@ -5,6 +5,7 @@ import DeleteIcon from '../../assets/delete.svg';
 const style = stylex.create({
   section: {
     margin: '0 8px',
+    height: '100%',
   },
   table: {
     width: '100%',

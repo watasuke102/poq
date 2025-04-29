@@ -1,7 +1,6 @@
-import React from 'react';
 import {Timer} from './features/timer';
 import * as stylex from '@stylexjs/stylex';
-import {AddNewTaskArea, TaskList} from './features/task';
+import {AddNewTaskArea, TaskList, useTasks} from './features/task';
 
 const style = stylex.create({
   app: {
@@ -12,10 +11,11 @@ const style = stylex.create({
 });
 
 export function App() {
-  const [isTimerRunning, setIsTimerRunning] = React.useState(false);
+  const tasksApi = useTasks();
+
   return (
     <main {...stylex.props(style.app)}>
-      <Timer isRunning={isTimerRunning} setIsRunning={setIsTimerRunning} />
+      <Timer tasksApi={tasksApi} />
       <AddNewTaskArea />
       <TaskList />
     </main>

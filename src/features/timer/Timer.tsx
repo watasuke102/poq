@@ -1,7 +1,19 @@
-import {useState, useEffect} from 'react';
+import {useTasks} from '../task/task_atom';
 import * as stylex from '@stylexjs/stylex';
+import {useTimer} from './timer_atom';
 
 const style = stylex.create({
+  timerStatusContainer: {
+    margin: '0 8px',
+    display: 'grid',
+    gridTemplateColumns: 'auto 1fr',
+    gap: 12,
+    fontSize: '2rem',
+    minHeight: 32,
+  },
+  timerStatus: {
+    fontWeight: 'bold',
+  },
   timerCounter: {
     display: 'block',
     textAlign: 'center',
@@ -20,34 +32,11 @@ const style = stylex.create({
 });
 
 interface Props {
-  isRunning: boolean;
-  setIsRunning: React.Dispatch<React.SetStateAction<boolean>>;
+  tasksApi: ReturnType<typeof useTasks>;
 }
+
 export function Timer(props: Props) {
-  const [timeLeft, setTimeLeft] = useState(30 * 60); // 30 minutes in seconds
-
-  useEffect(() => {
-    let timer: number | null = null;
-
-    if (props.isRunning) {
-      timer = setInterval(() => {
-        setTimeLeft(prevTime => Math.max(prevTime - 1, 0));
-      }, 1000);
-    }
-
-    return () => {
-      if (timer) clearInterval(timer);
-    };
-  }, [props.isRunning]);
-
-  const handleStartStop = () => {
-    props.setIsRunning(prev => !prev);
-  };
-
-  const handleReset = () => {
-    props.setIsRunning(false);
-    setTimeLeft(30 * 60);
-  };
+  const {timerState, toggleStartStop, reset} = useTimer(props.tasksApi);
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -57,16 +46,28 @@ export function Timer(props: Props) {
       '0',
     )}`;
   };
+  const currentTimerStatus = () => {
+    if (timerState.mode === 'break') {
+      return 'Break';
+    }
+    return timerState.currentTaskTitle ?? 'No Task';
+  };
 
   return (
     <div>
-      <span {...stylex.props(style.timerCounter)}>{formatTime(timeLeft)}</span>
+      <div {...stylex.props(style.timerStatusContainer)}>
+        <span>Current:</span>
+        <span {...stylex.props(style.timerStatus)}>{currentTimerStatus()}</span>
+      </div>
+      <span {...stylex.props(style.timerCounter)}>
+        {formatTime(timerState.timeLeft)}
+      </span>
       <div {...stylex.props(style.buttonContainer)}>
-        <button onClick={handleReset} {...stylex.props(style.button)}>
+        <button onClick={reset} {...stylex.props(style.button)}>
           Reset
         </button>
-        <button onClick={handleStartStop} {...stylex.props(style.button)}>
-          {props.isRunning ? 'Stop' : 'Start'}
+        <button onClick={toggleStartStop} {...stylex.props(style.button)}>
+          {timerState.isRunning ? 'Stop' : 'Start'}
         </button>
       </div>
     </div>
