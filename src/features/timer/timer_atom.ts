@@ -2,6 +2,7 @@ import React from 'react';
 import {useAtom} from 'jotai';
 import {atomWithStorage} from 'jotai/utils';
 import {useTasks} from '../task';
+import {notify} from '../notification';
 
 const WORK_DURATION_SEC = 30 * 60; // 30 minutes
 const BREAK_DURATION_SEC = 5 * 60; // 5 minutes
@@ -39,12 +40,22 @@ export function useTimer(tasksApi: ReturnType<typeof useTasks>) {
         // Timer reached 0
         switch (prev.mode) {
           case 'work':
+            notify('Task Completed!', {
+              body: prev.currentTaskTitle
+                ? `"${prev.currentTaskTitle}" completed. Time for a break!`
+                : 'Your work session has ended. Time for a break!',
+              icon: '/favicon.ico',
+            });
             return {
               ...prev,
               mode: 'break',
               timeLeft: BREAK_DURATION_SEC, // break
             };
           case 'break':
+            notify('Break time is over', {
+              body: 'Break time is over. Ready for the next task!',
+              icon: '/favicon.ico',
+            });
             return {
               ...prev,
               mode: 'none',
@@ -73,6 +84,16 @@ export function useTimer(tasksApi: ReturnType<typeof useTasks>) {
   };
 
   const toggleStartStop = () => {
+    // Request notification permissions when starting the timer
+    if (
+      !timerState.isRunning &&
+      'Notification' in window &&
+      Notification.permission !== 'granted' &&
+      Notification.permission !== 'denied'
+    ) {
+      Notification.requestPermission();
+    }
+
     setTimerState(prev => {
       const next = JSON.parse(JSON.stringify(prev));
       if (prev.mode === 'none') {
