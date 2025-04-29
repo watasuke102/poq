@@ -1,7 +1,6 @@
 import {useTasks} from '../task/task_atom';
 import * as stylex from '@stylexjs/stylex';
 import {useTimer} from './timer_atom';
-import {NotificationInfo} from '../notification';
 
 const style = stylex.create({
   timerStatusContainer: {
@@ -72,7 +71,6 @@ export function Timer(props: Props) {
           {timerState.isRunning ? 'Stop' : 'Start'}
         </button>
       </div>
-      <NotificationInfo />
     </div>
   );
 }

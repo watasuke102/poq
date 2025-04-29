@@ -1,23 +1,16 @@
 import {useState} from 'react';
 import * as stylex from '@stylexjs/stylex';
 import {useNotificationPermission} from './useNotificationPermission';
-import {sendTestNotification} from './notify';
 
 const styles = stylex.create({
   notificationInfo: {
-    fontSize: '0.75rem',
-    color: '#666',
+    fontSize: '0.85rem',
     textAlign: 'right',
-    marginTop: 4,
+    margin: 8,
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
     gap: 8,
-  },
-  icon: {
-    width: 16,
-    height: 16,
-    display: 'inline-block',
   },
   button: {
     fontSize: '0.75rem',
@@ -40,14 +33,6 @@ const styles = stylex.create({
 export function NotificationInfo() {
   const [permission, setPermission] = useState(useNotificationPermission());
 
-  const requestPermission = () => {
-    if ('Notification' in window) {
-      Notification.requestPermission().then(status => {
-        setPermission(status);
-      });
-    }
-  };
-
   if (permission === 'denied') {
     return (
       <div {...stylex.props(styles.notificationInfo)}>
@@ -67,37 +52,19 @@ export function NotificationInfo() {
         <span role='img' aria-label='bell'>
           🔔
         </span>
-        <button onClick={requestPermission} {...stylex.props(styles.button)}>
+        <button
+          onClick={() =>
+            window.Notification?.requestPermission().then(status => {
+              setPermission(status);
+            })
+          }
+          {...stylex.props(styles.button)}
+        >
           Enable notifications
         </button>
       </div>
     );
   }
 
-  if (permission === 'unsupported') {
-    return (
-      <div {...stylex.props(styles.notificationInfo)}>
-        <span role='img' aria-label='information'>
-          ℹ️
-        </span>
-        <span>Your browser doesn't support notifications</span>
-      </div>
-    );
-  }
-
-  if (permission === 'granted') {
-    return (
-      <div {...stylex.props(styles.notificationInfo)}>
-        <span role='img' aria-label='check'>
-          ✅
-        </span>
-        <span>Notifications enabled</span>
-        <button onClick={sendTestNotification} {...stylex.props(styles.button)}>
-          Test
-        </button>
-      </div>
-    );
-  }
-
-  return null;
+  return <></>;
 }
