@@ -24,7 +24,6 @@ export function AddNewTaskArea() {
     }
     addTask({title, priority});
     setTitle('');
-    setPriority(0);
   }, [addTask, title, priority]);
 
   return (
