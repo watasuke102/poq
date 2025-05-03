@@ -10,13 +10,20 @@ export function notify(title: string, options?: NotificationOptions): boolean {
     return false;
   }
 
+  const createNotification = () => {
+    const notice = new Notification(title, options);
+    notice.onshow = () => setTimeout(() => notice.close(), 5000);
+  }
+
   if (Notification.permission === 'granted') {
-    new Notification(title, options);
+    createNotification();
     return true;
-  } else if (Notification.permission !== 'denied') {
+  }
+
+  if (Notification.permission !== 'denied') {
     Notification.requestPermission().then(permission => {
       if (permission === 'granted') {
-        new Notification(title, options);
+        createNotification();
       }
     });
     return false;
