@@ -11,6 +11,7 @@ const style = stylex.create({
     overflowY: 'hidden',
   },
   scrollContainer: {
+    marginBottom: 8,
     overflowY: 'auto',
     scrollbarGutter: 'stable',
   },
