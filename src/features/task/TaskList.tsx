@@ -6,9 +6,12 @@ const style = stylex.create({
   section: {
     margin: '0 8px',
     height: '100%',
+    overflowY: 'hidden',
   },
   table: {
     width: '100%',
+    height: '100%',
+    overflowY: 'scroll',
     display: 'grid',
     gridTemplateColumns: 'auto 1fr auto',
     alignItems: 'center',
@@ -16,6 +19,10 @@ const style = stylex.create({
   },
   tableHead: {
     fontWeight: 'bold',
+    position: 'sticky',
+    top: 0,
+    backgroundColor: '#282c34dd',
+    borderBottom: '2px solid #abb2bf',
   },
   deleteButton: {
     display: 'flex',

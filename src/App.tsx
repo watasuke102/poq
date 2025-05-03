@@ -6,7 +6,7 @@ import {AddNewTaskArea, TaskList, useTasks} from './features/task';
 const style = stylex.create({
   app: {
     display: 'grid',
-    minHeight: '100vh',
+    height: '100vh',
     gridTemplateRows: 'auto auto 1fr auto',
   },
 });
