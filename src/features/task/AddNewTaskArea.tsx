@@ -4,7 +4,7 @@ import * as stylex from '@stylexjs/stylex';
 
 const style = stylex.create({
   section: {
-    margin: '0 4px',
+    margin: '0 8px',
   },
   form: {
     display: 'grid',
