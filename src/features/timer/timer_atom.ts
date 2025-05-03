@@ -83,6 +83,11 @@ export function useTimer(tasksApi: ReturnType<typeof useTasks>) {
     tasksApi.resetExecuted();
   };
 
+  const skip = () =>
+    setTimerState(prev => {
+      return {...prev, timeLeft: prev.mode !== 'none' ? 1 : prev.timeLeft};
+    });
+
   const toggleStartStop = () => {
     // Request notification permissions when starting the timer
     if (
@@ -118,5 +123,6 @@ export function useTimer(tasksApi: ReturnType<typeof useTasks>) {
     timerState,
     toggleStartStop,
     reset,
+    skip,
   };
 }

@@ -37,7 +37,7 @@ interface Props {
 }
 
 export function Timer(props: Props) {
-  const {timerState, toggleStartStop, reset} = useTimer(props.tasksApi);
+  const {timerState, toggleStartStop, reset, skip} = useTimer(props.tasksApi);
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -69,6 +69,9 @@ export function Timer(props: Props) {
         </button>
         <button onClick={toggleStartStop} {...stylex.props(style.button)}>
           {timerState.isRunning ? 'Stop' : 'Start'}
+        </button>
+        <button onClick={skip} {...stylex.props(style.button)}>
+          Skip
         </button>
       </div>
     </div>
